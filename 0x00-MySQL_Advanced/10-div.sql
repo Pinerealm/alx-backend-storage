@@ -2,7 +2,7 @@
 -- second number. If the second number is 0, return 0.
 DELIMITER && ;
 DROP FUNCTION IF EXISTS SafeDiv&&
-CREATE FUNCTION SafeDiv (a int, b int) RETURNS VARCHAR(255)
+CREATE FUNCTION SafeDiv (a int, b int) RETURNS VARCHAR(255) DETERMINISTIC
     BEGIN
         DECLARE res1 INT DEFAULT 0;
         DECLARE res2 DOUBLE;
@@ -13,7 +13,7 @@ CREATE FUNCTION SafeDiv (a int, b int) RETURNS VARCHAR(255)
                 SET res1 = a / b;
                 RETURN CONCAT(res1);
             ELSE
-                SET res2 = a / CAST(b AS DECIMAL);
+                SET res2 = a / b;
                 RETURN CONCAT(res2);
             END IF;
         END IF;
