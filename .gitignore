@@ -2,3 +2,8 @@ metal_bands.sql
 tmp_res
 *init.sql
 *main.sql
+names.sql
+*main.py
+__pycache__
+*.[bj]son
+*.zip
