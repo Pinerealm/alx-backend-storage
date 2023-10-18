@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Writing strings to Redis in Python"""
+"""Redis in Python"""
 import redis
 from typing import Union
 from uuid import uuid4
@@ -11,14 +11,30 @@ Redis_type = Union[str, bytes, int, float]
 def count_calls(method: callable) -> callable:
     """Count the number of times a method is called
     """
-    key = method.__qualname__
-
     @wraps(method)
     def wrapper(self, *args, **kwargs):
         """Wrapper function
         """
+        key = method.__qualname__
         self._redis.incr(key)
         return method(self, *args, **kwargs)
+    return wrapper
+
+
+def call_history(method: callable) -> callable:
+    """Store the history of inputs and outputs for a particular function
+    """
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        """Wrapper function
+        """
+        key = method.__qualname__
+        input = str(args)
+        self._redis.rpush("{}:inputs".format(key), input)
+        output = str(method(self, *args, **kwargs))
+
+        self._redis.rpush("{}:outputs".format(key), output)
+        return output
     return wrapper
 
 
@@ -31,6 +47,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @call_history
     @count_calls
     def store(self, data: Redis_type) -> str:
         """Generate a random key, store the input data in Redis using the key
