@@ -15,5 +15,5 @@ def get_page(url: str) -> str:
         return cache.decode("utf-8")
     else:
         html = requests.get(url).text
-        r.setex(url, 10, html)
+        r.set(url, html, ex=10)
         return html
