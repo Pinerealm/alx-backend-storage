@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """Redis in Python"""
 import redis
-from typing import Union
+from typing import Union, Callable
 from uuid import uuid4
 from functools import wraps
 
 Redis_type = Union[str, bytes, int, float]
 
 
-def count_calls(method: callable) -> callable:
+def count_calls(method: Callable) -> Callable:
     """Count the number of times a method is called
     """
     @wraps(method)
@@ -21,7 +21,7 @@ def count_calls(method: callable) -> callable:
     return wrapper
 
 
-def call_history(method: callable) -> callable:
+def call_history(method: Callable) -> Callable:
     """Store the history of inputs and outputs for a particular function
     """
     @wraps(method)
@@ -38,7 +38,7 @@ def call_history(method: callable) -> callable:
     return wrapper
 
 
-def replay(method: callable) -> None:
+def replay(method: Callable) -> None:
     """Display the history of calls of a particular function
     """
     r = redis.Redis()
@@ -71,7 +71,7 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: callable = None) -> bytes:
+    def get(self, key: str, fn: Union[Callable, None] = None) -> Redis_type:
         """Get the value stored in Redis for a given key
         """
         value = self._redis.get(key)
