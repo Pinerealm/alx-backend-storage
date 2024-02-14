@@ -1,5 +1,5 @@
 -- Create a table named users with the following attributes:
--- id: integer, neevr null, auto increment and primary key
+-- id: integer, never null, auto increment and primary key
 -- email: string (255 chars), never null, unique
 -- name: string (255 chars)
 -- If the table already exists, do not throw an error.

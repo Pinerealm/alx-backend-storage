@@ -1,4 +1,4 @@
--- Create a table named users with the following requirements:
+-- Create a table named users with the following attriutes:
 -- id: integer, auto increment, primary key
 -- email: string (255 chars), never null, unique
 -- name: string (255 chars)
