@@ -1,5 +1,6 @@
 -- List all bands with 'Glam rock' as their main style ranked by
 -- their longevity
+-- 2022 is used as the current year instead of YEAR(CURDATE())
 SELECT band_name,
        CASE
            WHEN split IS NULL THEN 2022 - formed
