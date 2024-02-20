@@ -4,7 +4,7 @@
 --     user_id, a users.id value
 --     project_name, a projects.name value
 --     score, a correction score
-DELIMITER $$ ;
+DELIMITER $$
 DROP PROCEDURE IF EXISTS AddBonus$$
 CREATE 
     PROCEDURE AddBonus(user_id INT, project_name VARCHAR (255), score INT)
@@ -16,4 +16,5 @@ CREATE
             VALUES (user_id, 
                     (SELECT id FROM projects WHERE name = project_name), 
                     score);
-    END$$
+    END $$
+DELIMITER ;
