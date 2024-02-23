@@ -1,11 +1,11 @@
--- Create a function, SafeDiv, that divides the first by the
--- second number. If the second number is 0, return 0.
-DELIMITER && ;
-DROP FUNCTION IF EXISTS SafeDiv&&
+-- Create a function, SafeDiv, that divides the first by the second number.
+-- If the second number is 0, return 0.
+DELIMITER &&
+DROP FUNCTION IF EXISTS SafeDiv &&
 CREATE FUNCTION SafeDiv (a int, b int) RETURNS VARCHAR(255) DETERMINISTIC
     BEGIN
         DECLARE res1 INT DEFAULT 0;
-        DECLARE res2 DOUBLE;
+        DECLARE res2 DOUBLE PRECISION;
         IF b = 0 THEN
             RETURN CONCAT(res1);
         ELSE
@@ -17,4 +17,5 @@ CREATE FUNCTION SafeDiv (a int, b int) RETURNS VARCHAR(255) DETERMINISTIC
                 RETURN CONCAT(res2);
             END IF;
         END IF;
-    END&&
+    END &&
+DELIMITER ;
