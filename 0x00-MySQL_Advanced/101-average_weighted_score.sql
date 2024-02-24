@@ -1,6 +1,6 @@
 -- Create a stored procedure, ComputeAverageWeightedScoreForUsers, that
 -- computes and stores the average weighted score for all students.
-DELIMITER $$ ;
+DELIMITER $$
 CREATE
     PROCEDURE ComputeAverageWeightedScoreForUsers ()
     BEGIN
@@ -21,4 +21,5 @@ CREATE
         END LOOP;
         
         CLOSE cur;
-    END$$
+    END $$
+DELIMITER ;
