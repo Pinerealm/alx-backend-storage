@@ -1,15 +1,12 @@
 -- Create a stored procedure, ComputeAverageWeightedScoreForUser, that
 -- computes and stores the average weighted score for a student.
-DELIMITER $$ ;
+DELIMITER $$
 CREATE
     PROCEDURE ComputeAverageWeightedScoreForUser (user_id INT)
     BEGIN
-        DECLARE total_score FLOAT;
-        DECLARE total_weight INT;
+        DECLARE total_score FLOAT DEFAULT 0;
+        DECLARE total_weight INT DEFAULT 0;
         DECLARE avg_score FLOAT;
-        
-        SET total_score = 0;
-        SET total_weight = 0;
         
         SELECT SUM(score * weight), SUM(weight)
         INTO total_score, total_weight
@@ -22,4 +19,5 @@ CREATE
         UPDATE users
         SET average_score = avg_score
         WHERE id = user_id;
-    END$$
+    END $$
+DELIMITER ;
