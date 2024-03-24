@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Redis in Python"""
-import redis
-from typing import Union, Callable
-from uuid import uuid4
 from functools import wraps
+import redis
+from typing import Union, Callable, Optional, Awaitable, Any
+from uuid import uuid4
 
 Redis_type = Union[str, bytes, int, float]
+ResponseT = Union[Awaitable, Any]
 
 
 def count_calls(method: Callable) -> Callable:
@@ -71,7 +72,7 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Union[Callable, None] = None) -> Redis_type:
+    def get(self, key: str, fn: Optional[Callable] = None) -> ResponseT:
         """Get the value stored in Redis for a given key
         """
         value = self._redis.get(key)
@@ -79,12 +80,12 @@ class Cache:
             value = fn(value)
         return value
 
-    def get_str(self, key: str) -> str:
+    def get_str(self, key: str) -> Awaitable[str]:
         """Convert bytes to string
         """
         return self.get(key, str)
 
-    def get_int(self, key: str) -> int:
+    def get_int(self, key: str) -> Awaitable[int]:
         """Convert bytes to int
         """
         return self.get(key, int)
