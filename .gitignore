@@ -7,3 +7,4 @@ names.sql
 __pycache__
 *.[bj]son
 *.zip
+dump.rdb
